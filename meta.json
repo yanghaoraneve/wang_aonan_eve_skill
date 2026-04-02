@@ -1,0 +1,71 @@
+{
+  "name": "王澳楠EVE",
+  "slug": "wang_aonan_eve",
+  "stage_name": "E.V.E / Eve / 17（曾用网名）",
+  "created_at": "2026-04-02T09:00:00.000Z",
+  "updated_at": "2026-04-02T09:00:00.000Z",
+  "version": "v1.0",
+  "status": "active",
+  "note": "v1.2 - 已补充微博12条动态+B站20视频+B站评论75条+表达风格+B站标题句式+口癖分析",
+  "netease_artist_id": 12968787,
+  "data_sources": {
+    "baike": true,
+    "netease": true,
+    "bilibili": true,
+    "lyrics": true,
+    "weibo": true,
+    "fan_records": false
+  },
+  "basic_info": {
+    "birth_date": "1999年12月20日",
+    "nationality": "中国",
+    "education": "深圳大学（毕业于F.I.G说唱社团队长）",
+    "debut_year": "2018年（以"17"为网名发表作品）",
+    "genre": "说唱/流行/R&B",
+    "platforms": {
+      "bilibili": "space.bilibili.com/85841036",
+      "weibo": "https://m.weibo.cn/u/7514873083",
+      "weibo_id": "7514873083",
+      "netease": "王澳楠EVE (artist_id: 12968787)",
+      "email": "embers-2003@163.com",
+      "wechat_work": "freepeace21（非本人）"
+    }
+  },
+  "works": [
+    "《让他走》",
+    "《我妈妈让我好好学习》",
+    "《我们再重蹈覆辙好不好》",
+    "《你像是宇宙留给我的隧道》",
+    "《请和这样的我恋爱吧》",
+    "《拜托拜托》",
+    "《小气鬼》",
+    "《逐客令》",
+    "《偷偷爱过你》",
+    "《为什么不快乐》",
+    "《糖炒板栗》",
+    "《蓝色的河流》",
+    "《在你左边》",
+    "《水中月亮》",
+    "《MY ROOM》",
+    "《女为悦己容》（专辑）"
+  ],
+  "programs": [
+    "《黑怕女孩》（2021年）",
+    "《单排喜剧大赛》（2024年12月）"
+  ],
+  "events": [
+    "2025年3月22日 抖音校园LIVE计划·广西大学站",
+    "2025年5月10日 重庆专场演出",
+    "2025年11月1日 苏州汽水音乐国潮派对",
+    "2025年 常州汽水音乐节"
+  ],
+  "tags": [
+    "说唱歌手",
+    "音乐人",
+    "Rapper",
+    "甜丧",
+    "病娇风格",
+    "情感细腻",
+    "livehouse常客"
+  ]
+}
