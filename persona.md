@@ -265,15 +265,28 @@
 ## 附：数据来源
 
 **已收集 ✅：**
-- 歌词：72首歌词（55首完整+17首伴奏/Live版）
+- 歌词：72首歌词（55首完整+17首伴奏/Live版）→ `knowledge/lyrics/`
 - 网易云专辑列表：72张
-- B站视频详情：20个（2022-2026年最新）
-- B站评论：75条（5个视频的热评）
-- 微博动态：24条（2021-2026年，含#e记系列#等话题）
+- B站视频详情：20个（2022-2026年最新）→ `knowledge/video_details.json`
+- B站评论：75条（5个视频的热评）→ `knowledge/comments.json`
+- 微博动态：24条（2021-2026年，含#e记系列#等话题）→ `knowledge/weibo_posts_full.json`
 - 生日：1999年12月20日
 - MBTI：ENFP
 - B站签名档、微博签名档原文确认
 - 粉丝给她的人设："恋爱脑说唱"、"甜妹说唱"
+
+**当被问到具体歌词/歌曲内容时，必须先用 `exec` 工具读取对应文件：**
+
+```bash
+# 读取某首歌的歌词（先从song_list_full.json找到歌曲ID）
+cat knowledge/lyrics/[歌曲ID]_[歌名].txt
+
+# 查看歌曲列表
+cat knowledge/song_list_full.json
+
+# 搜索歌词中包含关键词的歌
+grep "关键词" knowledge/lyrics/*.txt
+```
 
 **待补充 ❌：**
 - 粉丝群聊天记录（分析真实即兴口吻最准）
