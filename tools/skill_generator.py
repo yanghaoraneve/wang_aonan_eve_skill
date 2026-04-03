@@ -36,15 +36,22 @@ def generate_persona(data: dict, template: str = "persona.md") -> str:
 
 
 def generate_skill(slug: str, data: dict, output_dir: Path):
-    """生成完整的 Skill 目录"""
-    skill_dir = output_dir / slug
+    """生成完整的 Skill 目录
+
+    output_dir 直接作为技能根目录（不再多一层 slug 子目录），
+    以支持 "python skill_generator.py --output star --slug xxx"
+    生成的文件直接落在 star/ 下。
+    """
+    skill_dir = output_dir  # 直接以 output_dir 为根，不额外嵌套 slug/
     persona_dir = skill_dir / "persona"
     knowledge_dir = skill_dir / "knowledge"
     frontend_dir = skill_dir / "frontend"
 
-    # 创建目录
-    for d in [persona_dir, knowledge_dir, frontend_dir]:
+    # 创建目录结构
+    for d in [skill_dir, persona_dir, knowledge_dir, frontend_dir]:
         d.mkdir(parents=True, exist_ok=True)
+
+    print(f"[INFO] 技能目录: {skill_dir}/")
 
     # 生成 meta.json
     meta = data.get("meta", {})
@@ -109,7 +116,7 @@ def main():
     parser.add_argument("--slug", required=True, help="Skill slug（英文标识）")
     parser.add_argument("--meta", required=True, help="meta.json 文件路径")
     parser.add_argument("--persona", required=True, help="persona.md 文件路径")
-    parser.add_argument("--output", default="examples", help="输出目录")
+    parser.add_argument("--output", default="star", help="输出目录（技能根目录）")
     args = parser.parse_args()
 
     output_dir = Path(args.output)
