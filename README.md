@@ -18,8 +18,8 @@
 ┌─────────────────────────────────────────────────────────┐
 │                    Star Skill 工坊                       │
 │                                                         │
-│  prompts/          tools/           examples/           │
-│  ├── intake.md    ├── lyrics_fetcher.py  wang_aonan_eve/│
+│  prompts/          tools/           star/           │
+│  ├── intake.md    ├── lyrics_fetcher.py  （生成产物）│
 │  ├── persona.md   ├── bilibili_fetcher.py              │
 │  ├── meta.json    ├── weibo_fetcher.py                 │
 │  └── correction   └── version_manager.py               │
@@ -58,12 +58,12 @@ cd star-skill-framework
 python3 tools/skill_generator.py --interactive
 
 # 或指定数据源采集
-python3 tools/lyrics_fetcher.py --artist-id 12968787 --output examples/wang_aonan_eve/knowledge
-python3 tools/bilibili_fetcher.py --uid 85841036 --output examples/wang_aonan_eve/knowledge
-python3 tools/weibo_fetcher.py --uid 7514873083 --output examples/wang_aonan_eve/knowledge
+python3 tools/lyrics_fetcher.py --artist-id 12968787 --output star/knowledge
+python3 tools/bilibili_fetcher.py --uid 85841036 --output star/knowledge
+python3 tools/weibo_fetcher.py --uid 7514873083 --output star/knowledge
 
 # 构建知识库
-python3 tools/knowledge_builder.py --knowledge-dir examples/wang_aonan_eve/knowledge
+python3 tools/knowledge_builder.py --knowledge-dir star/knowledge
 ```
 
 ### 方式二：对话式录入（推荐）
@@ -124,11 +124,11 @@ python3 tools/knowledge_builder.py --knowledge-dir examples/wang_aonan_eve/knowl
 | `/star-rollback {slug} {version}` | 回滚版本 |
 | `/star-correct {slug}` | 开启纠正模式 |
 
-## 示例项目
+## 生成产物
 
 - **wang_aonan_eve** — 王澳楠EVE，说唱歌手，「音乐止痛药」
   - 72首歌词 + 20个B站视频 + 75条评论 + 24条微博
-  - 参考 `examples/wang_aonan_eve/`
+  - 通过本框架生成 → `star/`
 
 ## 参考项目
 

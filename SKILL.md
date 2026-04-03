@@ -67,12 +67,18 @@ star-skill-framework/
 │   ├── skill_generator.py     # Skill 文件生成
 │   └── version_manager.py     # 版本管理
 │
-├── examples/                  # 示例实例
-│   └── wang_aonan_eve/       # 王澳楠EVE 示例
-│       ├── persona.md
-│       ├── meta.json
-│       ├── knowledge/
-│       └── frontend/
+└── star/                      # ⚡ 框架生成产物（通过 /create-star 生成）
+    ├── SKILL.md
+    ├── meta.json
+    ├── persona/
+    │   └── persona.md
+    ├── knowledge/
+    │   ├── lyrics/
+    │   ├── song_list_full.json
+    │   ├── weibo_posts_full.json
+    │   ├── video_details.json
+    │   └── comments.json
+    └── frontend/
 │
 └── docs/
     └── PRC.md                # 项目需求文档
