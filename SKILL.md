@@ -67,7 +67,7 @@ star-skill-framework/
 │   ├── skill_generator.py     # Skill 文件生成
 │   └── version_manager.py     # 版本管理
 │
-└── star/                      # ⚡ 框架生成产物（通过 /create-star 生成）
+└── star/                      # ⚡ 框架生成产物（运行 /create-star 后生成）
     ├── SKILL.md
     ├── meta.json
     ├── persona/

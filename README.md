@@ -126,9 +126,23 @@ python3 tools/knowledge_builder.py --knowledge-dir star/knowledge
 
 ## 生成产物
 
-- **wang_aonan_eve** — 王澳楠EVE，说唱歌手，「音乐止痛药」
-  - 72首歌词 + 20个B站视频 + 75条评论 + 24条微博
-  - 通过本框架生成 → `star/`
+`star/` 目录在运行 `/create-star` 后自动生成，结构如下：
+
+```
+star/
+├── SKILL.md              # 技能入口
+├── meta.json             # 人物元信息
+├── persona/
+│   └── persona.md       # 完整人格（Layer 0-5）
+├── knowledge/
+│   ├── lyrics/           # 歌词文件
+│   ├── song_list_full.json
+│   ├── weibo_posts_full.json
+│   ├── video_details.json
+│   └── comments.json
+└── frontend/
+    └── server.py         # 对话前端
+```
 
 ## 参考项目
 
