@@ -18,7 +18,7 @@
 
 ---
 
-### 🌟 同类项目：[同事.skill](https://github.com/titanwings/colleague-skill) · [前任.skill](https://github.com/titanwings/ex-skill)
+### 🌟 参考项目：[同事.skill](https://github.com/titanwings/colleague-skill) · [前任.skill](https://github.com/titanwings/ex-skill)
 
 > 同事跑了用同事.skill，前任跑了用前任.skill，<br>
 > 喜欢的歌手也可以数字化——**赛博追星一条龙** 🌟🌟🌟
