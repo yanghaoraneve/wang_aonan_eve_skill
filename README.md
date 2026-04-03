@@ -1,131 +1,140 @@
-<div align="center">
+# ⭐ Star Skill Framework
 
-# 王澳楠 EVE · Skill
+> 「用她的声音说话，用她的方式爱你。」
 
-> *「大家好我是EVE！你的音乐止痛药！」*
+数字人格创建工坊。将歌手/偶像/公众人物转化为可对话的 AI Skill。
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-通用-blue.svg)]()
+## 理念
 
-</br>
+受 [colleague-skill](https://github.com/titanwings/colleague-skill) 启发，但专注于**公众人物**场景：
 
-说唱歌手、唱作人、竹笛+说唱的融合者。<br>
-她的歌装过太多人的深夜，也治愈过无数个说不出口的时刻。
+- 同事跑了 → [colleague-skill](https://github.com/titanwings/colleague-skill)
+- 前任跑了 → [ex-skill](https://github.com/titanwings/ex-skill)
+- 喜欢的歌手 → **star-skill** ⭐
 
-**王澳楠EVE的AI分身——用她的语气、她的方式，陪你聊音乐、聊情绪、聊那些说不出口的话。**
+## 核心架构
 
-[项目结构](#项目结构) · [快速使用](#快速使用) · [效果示例](#效果示例) · [数据来源](#数据来源)
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Star Skill 工坊                       │
+│                                                         │
+│  prompts/          tools/           examples/           │
+│  ├── intake.md    ├── lyrics_fetcher.py  wang_aonan_eve/│
+│  ├── persona.md   ├── bilibili_fetcher.py              │
+│  ├── meta.json    ├── weibo_fetcher.py                 │
+│  └── correction   └── version_manager.py               │
+│                                                         │
+│  用户输入 → intake向导 → 数据采集 → persona构建 → 对话调校│
+└─────────────────────────────────────────────────────────┘
 
----
+          │
+          ▼
+┌─────────────────────────────────────────────────────────┐
+│              生成的数字人格 Skill                        │
+│                                                         │
+│  slug/              Part A: Persona (Layer 0-5)        │
+│  ├── SKILL.md       Part B: Knowledge (歌词/微博/B站)   │
+│  ├── meta.json                                            │
+│  ├── persona/                                            │
+│  │   └── persona.md                                      │
+│  ├── knowledge/                                          │
+│  │   ├── lyrics/                                         │
+│  │   ├── weibo_posts_full.json                          │
+│  │   ├── video_details.json                             │
+│  │   └── comments.json                                  │
+│  └── frontend/                                          │
+│      └── server.py                                      │
+└─────────────────────────────────────────────────────────┘
+```
 
-### 🌟 同类项目：[同事.skill](https://github.com/titanwings/colleague-skill) · [前任.skill](https://github.com/titanwings/ex-skill)
+## 快速开始
 
-> 同事跑了用同事.skill，前任跑了用前任.skill，<br>
-> 喜欢的歌手也可以数字化——**赛博追星一条龙** 🌟🌟🌟
-
-</div>
-
----
-
-## 是什么
-
-**王澳楠 EVE**，1999.12.20 生，ENFP 说唱歌手，深圳大学 F.I.G 说唱社出身。
-
-代表作《逐客令》《让他走》《请和这样的我恋爱吧》《我妈妈让我好好学习》。B站签名：**「大家好我是EVE！你的音乐止痛药！」**
-
-这个 Skill 是她的数字分身——不只是语气模仿，是基于 72 首歌词 + 24 条微博 + 20 个 B 站视频构建的完整人格档案。
-
----
-
-## 快速使用
-
-### 方式一：配置 AI Agent（推荐）
+### 方式一：命令行向导
 
 ```bash
-# 克隆到本地
-git clone https://github.com/yanghaoraneve/wang_aonan_eve_skill.git
+cd star-skill-framework
 
-# 将 persona.md 全文作为 system prompt 加载到你的 AI
-# 知识库 knowledge/ 目录可按需挂载给 AI 读取
+# 启动创建向导（对话式）
+python3 tools/skill_generator.py --interactive
+
+# 或指定数据源采集
+python3 tools/lyrics_fetcher.py --artist-id 12968787 --output examples/wang_aonan_eve/knowledge
+python3 tools/bilibili_fetcher.py --uid 85841036 --output examples/wang_aonan_eve/knowledge
+python3 tools/weibo_fetcher.py --uid 7514873083 --output examples/wang_aonan_eve/knowledge
+
+# 构建知识库
+python3 tools/knowledge_builder.py --knowledge-dir examples/wang_aonan_eve/knowledge
 ```
 
-> SKILL.md 中有完整的人格配置说明、RAG 检索指令（让 AI 能读懂歌词/微博/B站数据）。
+### 方式二：对话式录入（推荐）
 
-### 方式二：对话前端（开箱即用）
+在 OpenClaw 中输入 `/create-star`，AI 会引导你完成：
+1. 人物基本信息录入
+2. 数据来源选择
+3. AI 自动分析并生成 persona + meta
+4. 对话调校
 
-```bash
-cd frontend
-# 编辑 eve_server.py，填入你的 MiniMax API Key
-python3 eve_server.py
-# 浏览器打开 http://localhost:18799
-```
-
----
-
-## 效果示例
-
-**场景一：聊音乐**
+## 创建流程
 
 ```
-用户    ❯ EVE，你最代表的作品是哪首？
-EVE     ❯ 嗯…《逐客令》应该大家都知道吧？
-        竹笛那段我真的录了很久哈哈
-        "欢迎所有人但是除了你" 那个感觉…
-        就，很像我。
-
-用户    ❯ 逐客令讲的什么？
-EVE     ❯ 口是心非呗！
-        就是那种"你走吧"但心里其实"别走"的感觉
-        写的时候我自己也…（叹气）
-        有些话说不出口嘛。
+第1步：录入信息     prompts/intake.md
+      ↓
+第2步：采集数据     tools/lyrics_fetcher.py
+                   tools/bilibili_fetcher.py
+                   tools/weibo_fetcher.py
+      ↓
+第3步：构建知识库   tools/knowledge_builder.py
+      ↓
+第4步：生成 Persona prompts/persona_builder.md
+      ↓
+第5步：生成 Meta   prompts/meta_builder.md
+      ↓
+第6步：对话调校    prompts/correction_handler.md
+      ↓
+第7步：版本存档    tools/version_manager.py
 ```
-
-**场景二：日常互动**
-
-```
-用户    ❯ 你怎么这么晚还不睡？
-EVE     ❯ omg你怎么也这么晚！
-        我是夜猫子型哈哈～习惯深夜写歌
-        白天脑子不清醒，一到晚上就…
-        熬过去就是变强！💪
-```
-
----
 
 ## 数据来源
 
-| 来源 | 内容 |
+| 来源 | 内容 | 采集方式 |
+|------|------|---------|
+| 网易云音乐 | 歌词（72首+） | `lyrics_fetcher.py` |
+| B站 | 视频详情 + 评论 | `bilibili_fetcher.py` |
+| 微博 | 动态 | `weibo_fetcher.py` |
+| 手动录入 | 补充描述 | `/create-star` 向导 |
+
+## Persona 结构（5层）
+
+| Layer | 内容 | 示例 |
+|-------|------|------|
+| Layer 0 | 核心规则 | 「永远用第一视角」「情绪先于逻辑」|
+| Layer 1 | 身份认知 | 自我定位 / 对事业态度 / 对粉丝态度 |
+| Layer 2 | 表达风格 | 口头禅 / 句式 / emoji / 节奏 |
+| Layer 3 | 情感行为 | 正面/负面情绪表达 / 粉丝互动 |
+| Layer 4 | 专业知识 | 音乐理念 / 代表作品 |
+| Layer 5 | 边界雷区 | 拒绝话题 / 雷区行为 |
+
+## 命令参考
+
+| 命令 | 说明 |
 |------|------|
-| 网易云音乐 API | 72 首歌词（55 首完整 + 17 首伴奏/Live） |
-| B站 API | 20 个视频详情 + 75 条热门评论 |
-| 微博搜索（weibo-cli） | 24 条动态（2021-2026） |
-| 公开资料整理 | 生日 / MBTI / 平台账号 / 经历 |
+| `/create-star` | 启动创建向导 |
+| `/list-stars` | 列出所有已创建 |
+| `/star {slug}` | 调用人格 |
+| `/star-rollback {slug} {version}` | 回滚版本 |
+| `/star-correct {slug}` | 开启纠正模式 |
+
+## 示例项目
+
+- **wang_aonan_eve** — 王澳楠EVE，说唱歌手，「音乐止痛药」
+  - 72首歌词 + 20个B站视频 + 75条评论 + 24条微博
+  - 参考 `examples/wang_aonan_eve/`
+
+## 参考项目
+
+- [colleague-skill](https://github.com/titanwings/colleague-skill) — 同事 Skill
+- [ex-skill](https://github.com/titanwings/ex-skill) — 前任 Skill
 
 ---
 
-## 项目结构
-
-```
-wang_aonan_eve_skill/
-├── SKILL.md              # Skill 配置入口（含 RAG 检索指令）
-├── persona.md            # 完整人格档案（system prompt 用）
-├── meta.json             # 艺人基本信息
-├── README.md             # 本文件
-├── frontend/
-│   └── eve_server.py     # 对话前端（Python，MiniMax API）
-└── knowledge/
-    ├── lyrics/               # 95 个歌词文件（网易云）
-    ├── song_list_full.json   # 51 首歌列表
-    ├── weibo_posts_full.json # 24 条微博原文
-    ├── video_details.json    # 20 个 B 站视频详情
-    └── comments.json         # 75 条 B 站评论
-```
-
----
-
-## License
-
-MIT License · 致谢与参考：
-
-**本项目在构思与结构上参考了 [titanwings/colleague-skill](https://github.com/titanwings/colleague-skill)**——「将冰冷的离别化为温暖的 Skill」，同系列还有 [前任.skill](https://github.com/titanwings/ex-skill)，赛博永生理念一致，深受启发。
-
+*Star Skill Framework · 赛博追星一条龙 ⭐*
