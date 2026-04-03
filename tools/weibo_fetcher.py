@@ -17,8 +17,9 @@ WEIBO_CLI = "weibo"  # weibo-cli 命令
 def fetch_weibo(uid: str, limit: int = 50) -> list:
     """使用 weibo-cli 获取微博动态"""
     try:
+        # weibo user <uid> --feeds --limit N --json
         result = subprocess.run(
-            [WEIBO_CLI, "user", "--uid", uid, "--limit", str(limit), "--json"],
+            [WEIBO_CLI, "user", uid, "--feeds", "--limit", str(limit), "--json"],
             capture_output=True,
             text=True,
             timeout=60
@@ -26,7 +27,7 @@ def fetch_weibo(uid: str, limit: int = 50) -> list:
         if result.returncode == 0:
             return json.loads(result.stdout)
         else:
-            print(f"[WARN] weibo-cli 失败: {result.stderr}")
+            print(f"[WARN] weibo-cli 失败: {result.stderr.strip()}")
     except FileNotFoundError:
         print("[ERROR] weibo-cli 未安装，请先安装: pip install weibo-cli")
     except Exception as e:

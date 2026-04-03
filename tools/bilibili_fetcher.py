@@ -16,8 +16,10 @@ BILIBILI_API = "https://api.bilibili.com/x/space/arc/search"
 VIDEO_DETAIL_API = "https://api.bilibili.com/x/web-interface/view"
 COMMENT_API = "https://api.bilibili.com/x/v2/reply"
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; StarSkill/1.0)",
-    "Referer": "https://www.bilibili.com/"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Referer": "https://www.bilibili.com/",
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
 }
 
 # ========== 采集 ==========
@@ -45,7 +47,7 @@ def fetch_videos(mid: str, limit: int = 20) -> list:
                     "desc": v["description"],
                     "play_count": v["play"],
                     "comment_count": v["comment"],
-                    "pubdate": time.strftime("%Y-%m-%d", time.localtime(v["pubdate"]))
+                    "pubdate": time.strftime("%Y-%m-%d", time.localtime(v["pubdate"])) if v.get("pubdate") else "unknown"
                 })
                 if limit > 0 and len(videos) >= limit:
                     break
@@ -78,7 +80,7 @@ def fetch_video_detail(bvid: str) -> dict:
                 "share_count": d["stat"]["share"],
                 "comment_count": d["stat"]["reply"],
                 "duration": d["duration"],
-                "pubdate": time.strftime("%Y-%m-%d", time.localtime(d["pubdate"]))
+                "pubdate": time.strftime("%Y-%m-%d", time.localtime(d["pubdate"])) if d.get("pubdate") else "unknown"
             }
     except Exception as e:
         print(f"[WARN] 获取视频详情失败 {bvid}: {e}")
@@ -105,7 +107,7 @@ def fetch_comments(bvid: str, limit: int = 20) -> list:
                     "text": r["content"]["message"],
                     "author": r["member"]["uname"],
                     "like_count": r["like"],
-                    "ctime": time.strftime("%Y-%m-%d", time.localtime(r["ctime"]))
+                    "ctime": time.strftime("%Y-%m-%d", time.localtime(r["ctime"])) if r.get("ctime") else "unknown"
                 })
                 if len(comments) >= limit:
                     break

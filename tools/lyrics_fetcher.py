@@ -14,8 +14,8 @@ import urllib.parse
 from pathlib import Path
 
 # ========== 配置 ==========
-NETEASE_API = "https://music.163.com/api/artists/{artist_id}/songs"
-SONG_DETAIL_API = "https://music.163.com/api/v1/resource/comments/R_SO_4_{song_id}?limit=1&offset=0"
+NETEASE_API = "https://music.163.com/api/artist/{artist_id}"  # 获取歌手热门歌曲
+NETEASE_SONG_API = "https://music.163.com/api/song/{song_id}/lyrics"  # 获取歌词
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; StarSkill/1.0)",
     "Referer": "https://music.163.com/"
@@ -29,6 +29,9 @@ def fetch_songs_by_artist(artist_id: str, output_dir: str):
         req = urllib.request.Request(url, headers=HEADERS)
         with urllib.request.urlopen(req, timeout=30) as resp:
             data = json.loads(resp.read().decode('utf-8'))
+        if data.get("code") != 200:
+            print(f"[ERROR] API返回错误码: {data.get('code')}")
+            return []
     except Exception as e:
         print(f"[ERROR] 获取歌曲列表失败: {e}")
         return []
@@ -47,8 +50,7 @@ def fetch_songs_by_artist(artist_id: str, output_dir: str):
 
 def fetch_lyrics(song_id: str) -> str:
     """获取歌曲歌词"""
-    # 歌词在歌曲详情页
-    url = f"https://music.163.com/api/song/{song_id}/lyrics"
+    url = NETEASE_SONG_API.format(song_id=song_id)
     try:
         req = urllib.request.Request(url, headers=HEADERS)
         with urllib.request.urlopen(req, timeout=30) as resp:
